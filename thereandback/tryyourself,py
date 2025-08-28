@@ -1,0 +1,32 @@
+import math
+from arduino import *
+from arduino_alvik import ArduinoAlvik
+
+alvik = ArduinoAlvik()
+
+# Parameters
+wheel_diameter = 6.6  # cm (voorbeeld, check jouw Alvik handleiding)
+wheel_circumference = math.pi * wheel_diameter
+
+distance = 100  # cm, afstand tot de barrière
+speed = 10      # snelheid in cm/s
+
+# Bereken revolutions en tijd
+revolutions = distance / wheel_circumference
+t = (distance / speed) * 1000  # in ms
+
+def setup():
+    alvik.begin()
+    delay(1000)
+
+def loop():
+    # Laat robot rijden
+    alvik.set_wheels_speed(speed, speed)
+    delay(int(t))  # rij voor de berekende tijd
+    alvik.set_wheels_speed(0, 0)
+    delay(5000)  # pauze zodat je kan resetten
+
+def cleanup():
+    alvik.stop()
+
+start(setup, loop, cleanup)
