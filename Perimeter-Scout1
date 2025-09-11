@@ -1,0 +1,27 @@
+from arduino import *
+from arduino_alvik import ArduinoAlvik
+
+alvik = ArduinoAlvik()
+
+def setup():
+    alvik.begin()
+    delay(1000)
+
+def loop():
+    for i in range(4):  # 4 kanten van de rechthoek
+        # recht vooruit
+        alvik.set_wheels_speed(30, 30)
+        delay(5600)   # pas aan afhankelijk van jouw afstand
+        alvik.set_wheels_speed(0, 0)
+        delay(500)
+
+        # pivot turn links 90º
+        alvik.set_wheels_speed(0, 30)
+        delay(2600)   # waarde fine-tunen voor 90º
+        alvik.set_wheels_speed(0, 0)
+        delay(500)
+
+def cleanup():
+    alvik.stop()
+
+start(setup, loop, cleanup)

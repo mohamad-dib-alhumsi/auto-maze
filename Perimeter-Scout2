@@ -1,0 +1,44 @@
+from arduino import *
+from arduino_alvik import ArduinoAlvik
+
+alvik = ArduinoAlvik()
+
+def setup():
+    alvik.begin()
+    delay(1000)
+
+def loop():
+    # Eerste rechte stuk
+    alvik.set_wheels_speed(30, 30)
+    delay(4000)  # korter stuk
+    alvik.set_wheels_speed(0, 0)
+    delay(500)
+
+    # Rechtsaf 90º
+    alvik.set_wheels_speed(30, 0)
+    delay(2600)
+    alvik.set_wheels_speed(0, 0)
+    delay(500)
+
+    # Tweede rechte stuk
+    alvik.set_wheels_speed(30, 30)
+    delay(6000)  # langer stuk
+    alvik.set_wheels_speed(0, 0)
+    delay(500)
+
+    # Linksaf 45º
+    alvik.set_wheels_speed(0, 30)
+    delay(1300)  # helft van 90º
+    alvik.set_wheels_speed(0, 0)
+    delay(500)
+
+    # Derde rechte stuk
+    alvik.set_wheels_speed(30, 30)
+    delay(3000)
+    alvik.set_wheels_speed(0, 0)
+    delay(500)
+
+def cleanup():
+    alvik.stop()
+
+start(setup, loop, cleanup)
